@@ -1,0 +1,38 @@
+gantt
+  title Food-outlet backend: project timeline (BITS Goa) -- 15 Oct 2025 to 18 Nov 2025
+  dateFormat  YYYY-MM-DD
+  excludes    weekends
+
+  section Planning & Kickoff
+  Project kickoff & requirements      :milestone, kickoff, 2025-10-15, 1d
+  Detailed spec & data schema design   :spec, 2025-10-16, 4d
+
+  section Data Collection & Ingestion
+  Integrate online order feed (API)    :api_integ, after spec, 6d
+  Offline/cash transaction ETL        :etl_cash, after api_integ, 5d
+  Centralized DB schema + migrations  :db_setup, after spec, 5d
+
+  section Backend Core
+  Transactions service (CRUD + sync)  :trans_svc, after db_setup, 7d
+  Reconciliation rules (cash vs online):recon, after trans_svc, 4d
+  Inventory tracking & reorder logic  :inventory, after trans_svc, 5d
+
+  section Analytics & Reporting
+  Real-time dashboard APIs            :dash_api, after trans_svc, 6d
+  Sales forecaster prototype (batch)  :forecast, after recon, 5d
+  Anomaly detection prototype         :anomaly, after recon, 5d
+  Report generator (PDF automation)   :pdf_reports, after dash_api, 6d
+
+  section Frontend & Ops
+  Dashboard UI integration & widgets  :dash_ui, after dash_api, 6d
+  Emailing / scheduled reports setup  :email_reports, after pdf_reports, 3d
+
+  section Testing, Deployment & Handover
+  Integration testing & fixes         :int_test, after dash_ui, 5d
+  Performance tuning / load tests     :perf_test, after int_test, 3d
+  Deploy to production (INS / FK)     :deploy, after perf_test, 1d
+  Handover & training for outlet staff:handover, after deploy, 2d
+  Project close & retrospective       :close, 2025-11-18, 1d
+
+  %% Critical tasks highlighted
+  critical api_integ, trans_svc, dash_api, pdf_reports

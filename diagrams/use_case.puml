@@ -1,0 +1,73 @@
+@startuml
+left to right direction
+skinparam usecase {
+  BackgroundColor White
+  BorderColor Black
+  ArrowColor Black
+}
+
+actor "Harsh Satyajit\n(Bill Management)" as harsh
+actor "Aditya Singh\n(Order History Retrieval)" as aditya
+actor "Akshank Bhadauria\n(Review & Feedback)" as akshank
+actor "Sai Tarun\n(User Registration & Auth)" as tarun
+actor "Sannidhya Rai\n(Security & Exceptions)" as sannidhya
+actor "Rudraksh Chhibber\n(Customer Support)" as rudra
+actor "Jashan Singh Mehta\n(Offer Management)" as jashan
+actor "Athish Shubhan\n(Recommendation System)" as athish
+actor "Yashvardhan Gupta\n(Payment Gateway)" as yash
+actor "Aarush Goyal\n(Menu CRUD & Category)" as aarush
+actor "Ayush Sanger\n(Sales Dashboard & Backend)" as ayush
+actor "Sajal Mutneja\n(User Profile)" as sajal
+actor "Eshan Singhai\n(Admin Auth & Roles)" as eshan
+actor "Anikait Rao\n(Notification)" as anikait
+actor "Harika\n(Menu Search, Filter, View)" as harika
+actor "Vansh Sharma\n(Admin Dashboard)" as vansh
+actor "Aditya Bendi\n(Order Status Update)" as adibendi
+actor "Saatvik Nagpal\n(Inventory Management)" as saatvik
+actor "Smeet Sorte\n(Loyalty Promotions)" as smeet
+actor "Kush Tokarawat\n(Cart Details)" as kush
+
+rectangle "Sales Data & Analytics System" {
+  usecase "Collect Sales Data\n(Online + Offline)" as UC1
+  usecase "Generate Sales Dashboard" as UC2
+  usecase "Automated Monthly\nReports (PDF/Charts)" as UC3
+  usecase "Analyze Trends & Revenue\n(Real-time)" as UC4
+  usecase "Integrate with Order &\nPayment Modules" as UC5
+}
+
+' Connections for Ayush
+ayush --> UC1
+ayush --> UC2
+ayush --> UC3
+ayush --> UC4
+
+' Includes/Extends
+UC2 --> UC4 : <<include>>
+UC3 --> UC2 : <<extend>>
+UC1 --> UC5 : <<include>>
+
+' Other team members connection (integration points)
+aditya --> UC5
+harsh --> UC5
+yash --> UC5
+aarush --> UC5
+adibendi --> UC5
+saatvik --> UC5
+
+vansh --> UC2
+eshan --> UC2
+sannidhya --> UC2
+
+' Indirect contributions (feedback, loyalty, notifications)
+akshank --> UC4
+smeet --> UC4
+anikait --> UC3
+jashan --> UC4
+athish --> UC4
+harika --> UC4
+rudra --> UC4
+tarun --> UC5
+sajal --> UC5
+kush --> UC5
+
+@enduml

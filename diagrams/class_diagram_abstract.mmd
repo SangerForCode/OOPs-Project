@@ -1,0 +1,142 @@
+classDiagram
+%% =====================
+%% Core Ordering Classes
+%% =====================
+
+class Order {
+  <<abstract>>
+  #orderID : int
+  #orderDate : Date
+  #totalAmount : float
+  #calculateTotal() float*
+}
+
+class OnlineOrder {
+  -transactionID : string
+  +processPayment() bool
+}
+
+class OfflineOrder {
+  -cashTendered : float
+  +provideChange() float
+}
+
+class OrderItem {
+  -quantity : int
+  -priceAtTimeOfSale : float
+}
+
+class FoodItem {
+  -itemID : int
+  -name : string
+  -currentPrice : float
+  -stockLevel : int
+  +updateStock(newStock:int) void
+  +compareTo(other:FoodItem) int
+}
+
+class Comparable {
+  <<interface>>
+  +compareTo(other) int
+}
+
+%% =====================
+%% Outlet & Management
+%% =====================
+
+class FoodOutlet {
+  -outletID : int
+  -name : string
+  -location : string
+  +getDailySales() float
+  +updateMenu() void
+}
+
+class Manager {
+  -managerID : int
+  -name : string
+  -accessLevel : string
+  +viewDashboard() void
+  +generateOnDemandReport() void
+}
+
+%% =====================
+%% Analytics & Reporting
+%% =====================
+
+class AnalyticsService {
+  +runETLPipeline() void
+  +detectTrends() void
+  +runAnomalyDetection() void
+}
+
+class ReportGenerator {
+  -template : string
+  -format : string
+  +generatePDF() Report
+  +emailReport() void
+}
+
+class Report {
+  -reportID : int
+  -dateGenerated : Date
+  -reportType : string
+}
+
+class SalesForecaster {
+  +predictSales() void
+}
+
+class AnomalyDetector {
+  +detect() void
+}
+
+class MenuRecommender {
+  +recommendItems() void
+}
+
+class InventoryManager {
+  +trackStock() void
+  +reorder() void
+}
+
+%% =====================
+%% Relationships
+%% =====================
+
+%% Inheritance (Generalization)
+Order <|-- OnlineOrder
+Order <|-- OfflineOrder
+
+%% Composition (Order composed of OrderItems)
+Order *-- "1..*" OrderItem : "contains"
+
+%% Aggregation (FoodOutlet has FoodItems)
+FoodOutlet o-- "1..*" FoodItem : "offers"
+
+%% Reflexive Association (FoodItem combos)
+FoodItem --> "0..*" FoodItem : "consists of"
+
+%% FoodOutlet receives Orders
+FoodOutlet --> "0..*" Order : "records"
+
+%% Directed Association (Manager uses ReportGenerator to produce Reports)
+Manager --> ReportGenerator : "generates"
+ReportGenerator --> "1..*" Report : "produces"
+
+%% AnalyticsService delegates to submodules
+AnalyticsService --> SalesForecaster : "uses"
+AnalyticsService --> AnomalyDetector : "uses"
+AnalyticsService --> MenuRecommender : "uses"
+
+%% InventoryManager tracks FoodItems
+InventoryManager --> "1..*" FoodItem : "tracks"
+
+%% Manager interacts with AnalyticsService
+Manager --> AnalyticsService : "requests insights"
+
+%% FoodOutlet managed by Manager
+FoodOutlet --> "1..*" Manager : "managed by"
+
+%% Interface implementation
+FoodItem <|.. Comparable

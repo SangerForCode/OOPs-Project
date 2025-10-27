@@ -1,0 +1,78 @@
+@startuml
+title Sales Analytics & Backend Management - State Chart
+
+[*] --> Data_Collection_Started : System Idle
+
+state "Data Collection" as Data_Collection_Started {
+    [*] --> Order_Data_Received
+    state Order_Data_Received : "Collect order data\n(Online + Offline)"
+    Order_Data_Received --> Data_Validated : Validate data format
+    state Data_Validated : "Validate data format"
+    Data_Validated --> Data_Stored : Store in unified database
+    state Data_Stored : "Store in unified database"
+    Data_Stored --> [*]
+}
+
+Data_Collection_Started --> Analytics_Processing : Data sync complete
+
+' -----------------------------
+' Analytics Processing Branch
+' -----------------------------
+state "Analytics & Processing" as Analytics_Processing {
+    [*] --> ETL_Started
+    state ETL_Started : "Run ETL pipeline\n(Extract, Transform, Load)"
+    ETL_Started --> Trends_Analyzed : Identify sales trends
+    state Trends_Analyzed : "Identify sales trends"
+    Trends_Analyzed --> Forecast_Generated : Predict future sales
+    state Forecast_Generated : "Predict future sales"
+    Forecast_Generated --> Anomalies_Checked : Detect anomalies
+    state Anomalies_Checked : "Detect anomalies"
+    Anomalies_Checked --> [*]
+}
+
+Analytics_Processing --> Reporting_Stage : Trigger report generation
+Analytics_Processing --> Dashboard_Stage : Update dashboard
+
+' -----------------------------
+' Report Generation Branch
+' -----------------------------
+state "Reporting Module" as Reporting_Stage {
+    [*] --> Report_Building
+    state Report_Building : "Compile daily/monthly data"
+    Report_Building --> Graphs_Ready : Generate charts and insights
+    state Graphs_Ready : "Generate charts and insights"
+    Graphs_Ready --> PDF_Exported : Export as PDF
+    state PDF_Exported : "Export as PDF"
+    PDF_Exported --> Report_Sent : Send report to manager
+    state Report_Sent : "Send report to manager"
+    Report_Sent --> [*]
+}
+
+' -----------------------------
+' Dashboard Branch
+' -----------------------------
+state "Dashboard Update" as Dashboard_Stage {
+    [*] --> Metrics_Refreshed
+    state Metrics_Refreshed : "Update live sales dashboard"
+    Metrics_Refreshed --> Manager_Viewed : Manager views metrics
+    state Manager_Viewed : "Manager views metrics"
+    Manager_Viewed --> [*]
+}
+
+Reporting_Stage --> Decision_Making
+Dashboard_Stage --> Decision_Making
+
+' -----------------------------
+' Manager Decision State
+' -----------------------------
+state "Manager Review & Action" as Decision_Making {
+    [*] --> Insights_Reviewed
+    state Insights_Reviewed : "Review sales data and insights"
+    Insights_Reviewed --> Action_Taken : Menu update / stock adjustment
+    state Action_Taken : "Menu update / stock adjustment"
+    Action_Taken --> [*]
+}
+
+Decision_Making --> [*]
+
+@enduml
