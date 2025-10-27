@@ -48,36 +48,3 @@ Or run PlantUML via Docker:
 ```bash
 docker run --rm -v "$(pwd)":/workspace plantuml/plantuml:latest diagrams/state_chart.puml
 ```
-
-## How to upload to GitHub and link to your submission
-
-1. Create a GitHub repository (on the GitHub website). Note the repository URL (e.g. `https://github.com/YOUR_USERNAME/YOUR_REPO`).
-2. From your local project directory, run:
-
-```bash
-git init
-git add .
-git commit -m "Add diagrams and project README — Sales Analytics & Backend Management"
-git branch -M main
-git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO.git
-git push -u origin main
-```
-
-3. Copy the repo URL (or GitHub Pages link if you enable Pages) and paste it into your official submission page as required by your course. Example URL to paste as a submission:
-
-`https://github.com/YOUR_USERNAME/YOUR_REPO`
-
-Replace `YOUR_USERNAME` and `YOUR_REPO` with your GitHub username and repository name.
-
-## Notes & next steps
-
-- If you want the diagrams to render directly on the GitHub repository root README, consider embedding Mermaid blocks inside `README.md` or adding generated PNG/SVG outputs to the repo (e.g., `diagrams/*.png`) committed alongside the sources.
-- If you want, I can also generate PNG/SVG from the PlantUML files here and commit them to `diagrams/` so the visuals show on GitHub without extra setup; tell me which formats you prefer (PNG or SVG).
-
-## Contact / Submission
-
-If you need the final GitHub URL added to your official submission page, provide the submission portal link (or tell me where to add it) and I can prepare a short submission note (with the repo link and summary) that you can paste into the portal.
-
----
-Generated and organized diagram sources are in `diagrams/`. Next: I will commit the README and optionally generate rendered images if you want them included for direct GitHub viewing.
-
